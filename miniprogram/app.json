@@ -1,9 +1,10 @@
 {
   "pages": [
     "pages/playlist/playlist",
+    "pages/musiclist/musiclist",
     "pages/blog/blog",
-    "pages/profile/profile"
-  
+    "pages/profile/profile",
+    "pages/demon/demon"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

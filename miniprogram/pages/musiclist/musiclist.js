@@ -1,31 +1,20 @@
-// pages/playlist/playlist.js
-const MAX_LIMIT=15
+// pages/musiclist/musiclist.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    switchImgUrls: [{
-        url: 'http://p1.music.126.net/oeH9rlBAj3UNkhOmfog8Hw==/109951164169407335.jpg',
-      },
-      {
-        url: 'http://p1.music.126.net/xhWAaHI-SIYP8ZMzL9NOqg==/109951164167032995.jpg',
-      },
-      {
-        url: 'http://p1.music.126.net/Yo-FjrJTQ9clkDkuUCTtUg==/109951164169441928.jpg',
-      }
-    ],
-    playlist:[]
+
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getPlayList()
+    this.getMusicList(options.playlistId)
   },
-  
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -58,17 +47,14 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-      this.setData({
-        playlist:[]
-      })
-      this.getPlayList()
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    this.getPlayList()
+
   },
 
   /**
@@ -77,25 +63,24 @@ Page({
   onShareAppMessage: function () {
 
   },
-  //获取歌单列表信息
-  getPlayList:function(){
-    wx.showLoading({
-      title: '加载中',
-      mask:true
-    })
+  //获取播放列表
+  getMusicList:function(playlistId){
     wx.cloud.callFunction({
       name:'music',
       data:{
-        $url:'playlist',
-        start:this.data.playlist.length,
-        count:MAX_LIMIT
+        $url:'musiclist',
+        playlistId:playlistId
       }
     }).then((res)=>{
+      let  p1=res.result.playlist
+      console.log(p1)
       this.setData({
-        playlist:this.data.playlist.concat(res.result.data)
+        musiclist:p1.tracks,
+        listInfo:{
+          coverImgUrl:p1.coverImgUrl,
+          name:p1.name
+        }
       })
-      wx.stopPullDownRefresh()
-      wx.hideLoading()
     })
   }
 })
