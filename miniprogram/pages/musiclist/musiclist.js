@@ -29,7 +29,6 @@ Page({
       }
     }).then((res)=>{
       let  p1=res.result.playlist
-     wx.hideLoading()
       this.setData({
         musiclist:p1.tracks,
         listInfo:{
@@ -37,6 +36,7 @@ Page({
           name:p1.name
         }
       })
+     wx.hideLoading()
       this.setMusicList()
     })
   },

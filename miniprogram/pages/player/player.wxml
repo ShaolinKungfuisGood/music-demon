@@ -1,2 +1,14 @@
-<!--pages/player/player.wxml-->
-<text>pages/player/player.wxml</text>
+<view class="player-container" style="background:url({{picUrl}}) center/cover no-repeat"></view>
+<view class="player-mask"></view>
+
+<view class="play-info">
+	<view class="player-disc">
+		<image class="player-img" src="{{picUrl}}"></image>
+	</view>
+</view>
+<view class="control">
+  <text class="iconfont icon-shangyishoushangyige"></text>
+   <text class="iconfont {{isPlaying?'icon-zanting_huaban':'icon-iconset0481'}}"></text>
+   <!-- <text class="iconfont {{isPlaying?'icon-zanting1':'icon-bofang1'}}" bind:tap="togglePlaying"></text> -->
+   <text class="iconfont icon-xiayigexiayishou"></text>
+</view>
