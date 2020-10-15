@@ -33,9 +33,6 @@
   color: #888;
 }
 
-.playing .musiclist-index,
-.playing .musiclist-name, 
-.playing .musiclist-alia,
-.playing .musiclist-singer {
+.playing view,.playing text{
   color: #d43c33;
 }

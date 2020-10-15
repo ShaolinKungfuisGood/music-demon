@@ -11,7 +11,6 @@ const MAX_LIMIT = 100
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  // const list = await playlistCollection.get()
   const countResult=await playlistCollection.count()
   const {total}=countResult
   const batchTimes=Math.ceil(total/MAX_LIMIT)
@@ -59,7 +58,6 @@ exports.main = async (event, context) => {
   }).then((res) => {
     console.log('插入成功')
   }).catch((err) => {
-    console.log(err)
     console.log('插入失败')
   })
   return newDate.length

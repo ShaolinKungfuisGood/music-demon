@@ -8,5 +8,5 @@
       </view>
       <view class="musiclist-singer">{{item.ar[0].name}} - {{item.al.name}}</view>
     </view>
-  </view>
-</block>
+  </view> 
+</block>  
