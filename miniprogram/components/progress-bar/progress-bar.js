@@ -39,7 +39,6 @@ Component({
      */
     methods: {
         onChange: function (event) {
-            console.log(event)
             // 拖动产生的效果
             if (event.detail.source == 'touch') {
                 this.data.pregoress = event.detail.x / (movableAreaWidth - movableViewWidth) * 100
@@ -84,9 +83,9 @@ Component({
                 console.log('onWaiting')
             })
             backgroundAudioManager.onCanplay(() => {
-                console.log('onCanplay')
+                console.log('onCanplay')  //进入可播放事件
                 if (typeof backgroundAudioManager.duration != 'undefined') {
-                    this.setTime()
+                    this.setTime()  
                 } else {
                     setTimeout(() => {
                         this.setTime()
@@ -95,10 +94,10 @@ Component({
             })
             backgroundAudioManager.onTimeUpdate(() => {
                 // console.log('onTimeUpdate')
-                const currentTime = backgroundAudioManager.currentTime
-                duration = backgroundAudioManager.duration
-                const currentTimeFmt = this.dataformat(currentTime)
-                const sec = currentTime.toString().split('.')[0]
+                const currentTime = backgroundAudioManager.currentTime //获取当前的歌曲播放时间  单位：秒
+                duration = backgroundAudioManager.duration //获取当前歌曲总时长  单位:秒
+                const currentTimeFmt = this.dataformat(currentTime)  //将当前歌曲播放的时间进行时间格式化  返回 00:00格式
+                const sec = currentTime.toString().split('.')[0] //获取当面歌曲的播放时间并转换为字符串并根据小数点分割成组成数组，取数组首项  获取当前时间的整数  单位:秒
                 if (sec != currentSec && isMoving == false) {
                     this.setData({
                         movableDis: (movableAreaWidth - movableViewWidth) * currentTime / duration,
@@ -132,18 +131,18 @@ Component({
                 ['showTime.totalTime']: `${durationformat.min}:${durationformat.sec}`
             })
         },
-        // 格式化时间
+        // 格式化时间  返回格式化后的时间
         dataformat(sec) {
-            const min = Math.floor(sec / 60)
-            sec = Math.floor(sec % 60)
+            const min = Math.floor(sec / 60)  //向下取整，秒数除以60获取准确的分钟
+            sec = Math.floor(sec % 60) // 向下取整   秒数取余60  获取具体分钟后剩余的秒数
             return {
-                'min': this.parse0(min),
+                'min': this.parse0(min), //补零
                 'sec': this.parse0(sec)
             }
         },
         //补零
         parse0(sec) {
-            return sec < 10 ? '0' + sec : sec
+            return sec < 10 ? '0' + sec : sec  //三目运算符  判断传递过来的数是否小于10，小于则前面进行补零操作，否则原位输出
         },
 
     }
