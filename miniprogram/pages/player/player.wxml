@@ -2,13 +2,17 @@
 <view class="player-mask"></view>
 
 <view class="play-info">
-	<view class="player-disc">
-		<image class="player-img" src="{{picUrl}}"></image>
+	<view class="player-disc {{isPlaying?'play':''}}">
+		<image class="player-img  rotation {{isPlaying?'':'rotation-paused'}}" src="{{picUrl}}"></image>
 	</view>
+  
+<view class="progress-bar">
+	<x-progress-bar bind:musicEnd="onNext"></x-progress-bar>
 </view>
-<view class="control">
-  <text class="iconfont icon-shangyishoushangyige"></text>
-   <text class="iconfont {{isPlaying?'icon-zanting_huaban':'icon-iconset0481'}}"></text>
-   <!-- <text class="iconfont {{isPlaying?'icon-zanting1':'icon-bofang1'}}" bind:tap="togglePlaying"></text> -->
-   <text class="iconfont icon-xiayigexiayishou"></text>
+
+	<view class="control">
+		<text class="iconfont icon-shangyishoushangyige" bindtap="onPev"></text>
+		<text class="iconfont {{isPlaying?'icon-zanting_huaban':'icon-iconset0481'}}" bindtap="togglePlaying"></text>
+		<text class="iconfont icon-xiayigexiayishou" bindtap="onNext"></text>
+	</view>
 </view>

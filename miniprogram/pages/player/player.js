@@ -1,4 +1,7 @@
 // pages/player/player.js
+const backgroundAudioManager = wx.getBackgroundAudioManager()
+let nowPlayingIndex=0
+let musiclist=[]
 Page({
 
     /**
@@ -13,7 +16,9 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        this.getMusicMsg(options)
+        nowPlayingIndex = options.index
+        console.log(options.musicId)
+        this.getMusicMsg(options.musicId)
     },
 
     /**
@@ -65,17 +70,16 @@ Page({
 
     },
     //获取歌曲信息
-    getMusicMsg: function (e) {
-        let nowPlayingIndex = e.index
-        let {musicId} = e
-        console.log(musicId)
-        let musiclist = wx.getStorageSync('musiclist')
+    getMusicMsg: function (musicId) {
+        backgroundAudioManager.stop()
+        musiclist = wx.getStorageSync('musiclist')
         let music = musiclist[nowPlayingIndex]
         wx.setNavigationBarTitle({
             title: music.name
         })
         this.setData({
-            picUrl: music.al.picUrl
+            picUrl: music.al.picUrl,
+            isPlaying:false
         })
         wx.showLoading({
             title: '加载中',
@@ -90,12 +94,35 @@ Page({
         }).then((res) => {
             wx.hideLoading()
             let {result}=res
-            const backgroundAudioManager = wx.getBackgroundAudioManager()
             backgroundAudioManager.src=result.data[0].url
             backgroundAudioManager.title=music.name
             this.setData({
                 isPlaying:true
             })
+        })
+    },
+    onPev:function(){
+        nowPlayingIndex--
+        if(nowPlayingIndex<0){
+            nowPlayingIndex=musiclist.length-1
+        }
+        this.getMusicMsg(musiclist[nowPlayingIndex].id)
+    },
+    onNext:function(){
+        nowPlayingIndex++
+        if(nowPlayingIndex===musiclist.length){
+            nowPlayingIndex=0
+        }
+        this.getMusicMsg(musiclist[nowPlayingIndex].id)
+    },
+    togglePlaying:function(){
+        if(this.data.isPlaying){
+            backgroundAudioManager.pause()
+        }else{
+            backgroundAudioManager.play()
+        }
+        this.setData({
+            isPlaying:!this.data.isPlaying
         })
     }
 })
