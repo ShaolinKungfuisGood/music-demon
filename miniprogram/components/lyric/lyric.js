@@ -65,8 +65,8 @@ Component({
           for(let i=0,len=lrclist.length;i<len;i++){  
             if(currentTime <= lrclist[i].time){ //当前播放时间小于歌词信息中的时间
                 this.setData({
-                    nowLyricIndex:i-1,
-                    scrollTop:(i-1)*lyrichight
+                    nowLyricIndex:i-1, 
+                    scrollTop:(i-1)*lyrichight//高亮位于滑动中间
                 })
                 break
             }
