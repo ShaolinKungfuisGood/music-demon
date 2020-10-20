@@ -58,7 +58,7 @@ Component({
               if(this.data.nowLyricIndex!=-1){
                   this.setData({
                     nowLyricIndex:-1,  //歌词索引设置为首位
-                    scrollTop:lrclist.length*lyrichight //滑动到歌词信息末尾
+                    scrollTop:lrclist.length*lyrichight //设置竖向滚动条位置
                   })
               }  
           }
@@ -74,7 +74,7 @@ Component({
         },
         //歌词解析
         parseLyric(sLyric){
-            let line=sLyric.split('\n')  //按照换行符，将歌词信息组成数组
+            let line=sLyric.split('\n')  //按照换行符，将歌词和时间分别组成数组
             let lrclist=[]  //歌词列表
             line.forEach((elemt)=>{
                 let time=elemt.match(/\[\d{2,}:(\d{2})(?:\.(\d{2,3}))?]/g)  //将歌词时间按照正则表达式进行匹配

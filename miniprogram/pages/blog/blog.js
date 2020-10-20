@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    modalshow:false //控制底部弹出层
   },
 
   /**
@@ -15,52 +15,35 @@ Page({
 
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  onPublish(){
+    // 判断用户是否授权
+    wx.getSetting({
+      success:(res)=>{
+        console.log(res)
+        if(res.authSetting["scope.userInfo"]){  
+          wx.getUserInfo({
+            success:(res)=>{
+           this.onloginSuccess({detail:res.userInfo})
+            }
+          })
+        }else{
+          this.setData({
+            modalshow:true
+          })
+        }
+      }
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  onloginSuccess(e){
+   const {detail}=e
+  wx.navigateTo({
+    url:`../blog-edit/blog-edit?nikeName=${detail.nickName}&avatarUrl=${detail.avatarUrl}`,
+  })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  onloginfail(e){
+   wx.showModal({
+     title:'授权用户才能发布',  
+     content:''
+   })
   }
 })

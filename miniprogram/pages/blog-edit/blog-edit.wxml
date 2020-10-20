@@ -1,0 +1,12 @@
+<view class="container">
+	<textarea class="content" placeholder="分享新鲜事..."></textarea>
+	<view class="image-list">
+		<view class="image-wrap select-photo">
+              <i class="iconfont icon-jiahao "></i>
+        </view> 
+	</view>
+</view>
+<view class="footer">
+    <text class="words-num">{{wordsNum}}</text>
+    <button class="send-btn" style="width:unset">发布</button>
+</view>

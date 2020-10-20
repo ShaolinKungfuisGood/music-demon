@@ -5,7 +5,8 @@
     "pages/blog/blog",
     "pages/profile/profile",
     "pages/player/player",
-    "pages/demon/demon"
+    "pages/demon/demon",
+    "pages/blog-edit/blog-edit"
   ],
   "requiredBackgroundModes": [
     "audio"
@@ -29,7 +30,7 @@
       },
       {
         "pagePath": "pages/blog/blog",
-        "text": "博客",
+        "text": "发现",
         "iconPath": "images/blog.png",
         "selectedIconPath": "images/blog-actived.png"
       },

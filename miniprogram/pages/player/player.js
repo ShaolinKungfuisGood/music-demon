@@ -74,7 +74,7 @@ Page({
     },
     //获取歌曲信息
     getMusicMsg: function (musicId) {
-        if (musicId == app.getPlayingMusic()) {  //将当前页面与全局变量中保存的musicId进行对比 判断返回页面后重新进入是否为同一首歌曲
+        if (musicId == app.getPlayingMusicId()) {  //将当前页面与全局变量中保存的musicId进行对比 判断返回页面后重新进入是否为同一首歌曲
             this.setData({
                 isSame: true  
             })
@@ -129,6 +129,7 @@ Page({
                     $url: 'lyric'
                 }
             }).then((res) => {
+                console.log(res)
                 let lyric = '暂无歌词'  //纯音乐的情况下  是没有歌词的 设置默认歌词
                 const {
                     lrc
