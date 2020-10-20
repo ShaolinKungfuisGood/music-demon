@@ -1,12 +1,21 @@
 <view class="container">
-	<textarea class="content" placeholder="分享新鲜事..."></textarea>
+	<textarea class="content" placeholder="分享新鲜事..." bindinput="onInput" maxlength="140" auto-focus bindfocus="onFocus" bindblur="onBlur"></textarea>
 	<view class="image-list">
-		<view class="image-wrap select-photo">
-              <i class="iconfont icon-jiahao "></i>
-        </view> 
+		<!-- 显示图片 -->
+		<block wx:for="{{images}}" wx:key="*this">
+			<view class="image-wrap">
+            <image  class="image" src="{{item}}" mode="aspectFill" bindtap="onPreViewImg" data-imgSrc="{{item}}"></image>
+            <i class="iconfont icon-shanchu1 icon-shanchu" bindtap="onDellImg" data-index="{{index}}"></i>
+			</view>
+		</block>
+
+		<!-- 选择图片 -->
+		<view class="image-wrap select-photo" bindtap="onChooseImage" hidden="{{!selectPhoto}}">
+			<i class="iconfont icon-jiahao "></i>
+		</view>
 	</view>
 </view>
-<view class="footer">
-    <text class="words-num">{{wordsNum}}</text>
-    <button class="send-btn" style="width:unset">发布</button>
+<view class="footer" style="bottom:{{footerBottom}}rpx">
+	<text class="words-num">{{wordsNum}}</text>
+	<button class="send-btn" style="width:unset">发布</button>
 </view>

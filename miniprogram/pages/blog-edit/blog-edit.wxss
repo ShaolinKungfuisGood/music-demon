@@ -72,7 +72,7 @@
     font-weight: bolder;
   }
   
-  .selectphoto {
+  .select-photo {
     border: 2rpx dashed #cbd1d7;
     position: relative;
   }
