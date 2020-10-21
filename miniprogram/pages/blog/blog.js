@@ -48,18 +48,20 @@ Page({
    })
   },
   getBlogList(){
-    // wx.cloud.callFunction({
-    //   name:'blog',
-    //   data:{
-    //     $url:'list',
-    //     start:0,
-    //     count:10,
-    //   }
-    // }).then((res)=>{
-    //   console
-    //  this.setData({
-    //    blogList:this.data.blogList.concat(res.result)
-    //  })
-    // })
+    wx.cloud.callFunction({
+      name:'blog',
+      data:{
+        $url:'list',
+        start:0,
+        count:10,
+      }
+    }).then((res)=>{
+      console.log(res)
+     this.setData({
+       blogList:this.data.blogList.concat(res.result)
+     })
+    }).catch((err)=>{
+      console.log(err)
+    })
   }
 })
