@@ -5,14 +5,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-    modalshow:false //控制底部弹出层
+    modalshow:false, //控制底部弹出层
+    blogList:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getBlogList() //获取博客列表信息
   },
 
   onPublish(){
@@ -45,5 +46,20 @@ Page({
      title:'授权用户才能发布',  
      content:''
    })
+  },
+  getBlogList(){
+    // wx.cloud.callFunction({
+    //   name:'blog',
+    //   data:{
+    //     $url:'list',
+    //     start:0,
+    //     count:10,
+    //   }
+    // }).then((res)=>{
+    //   console
+    //  this.setData({
+    //    blogList:this.data.blogList.concat(res.result)
+    //  })
+    // })
   }
 })

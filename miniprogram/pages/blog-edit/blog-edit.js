@@ -1,6 +1,9 @@
 // pages/blog-edit/blog-edit.js
-const Max_WORDS_NUM = 140  //文字输入的最大个数
+const Max_WORDS_NUM = 140 //文字输入的最大个数
 const Max_IMG_COUNT = 9 //最大图片上传数量
+const db=wx.cloud.database()
+let content=''
+let userInfo={}
 Page({
 
     /**
@@ -18,6 +21,7 @@ Page({
      */
     onLoad: function (options) {
         console.log(options)
+        userInfo=options
     },
     onChooseImage: function () {
         // 表示还能选多少张图片
@@ -37,71 +41,84 @@ Page({
             }
         })
     },
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function () {
+    // 点击发布
+    send() {
+        //图片上传
 
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function () {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh: function () {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function () {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function () {
-
-    },
+        if(content.trim()===''){
+            wx.showToast({
+              title: '内容不能为空',
+              icon:'none'
+            })
+            return
+        }
+        let promiseArr = []
+        let fileIds=[]
+        wx.showLoading({
+          title: '发布中',
+        })
+        for (let i = 0, len = this.data.images.length; i < len; i++) {
+         let p= new Promise((resolve, reject) => {
+                let item = this.data.images[i]
+                let suffix = /\.\w+$/.exec(item)[0]
+                wx.cloud.uploadFile({
+                    cloudPath: 'blog/' + Date.now() + '-' + Math.random() * 1000000 + suffix,
+                    filePath: item,
+                    success: (res) => {
+                        fileIds= fileIds.concat(res.fileID)
+                       resolve()
+                    },
+                    fail: (err) => {
+                        reject
+                    }
+                })
+            })
+            promiseArr.push(p)
+        }
+        // 存入到云数据库当中
+        Promise.all(promiseArr).then((res)=>{
+            db.collection('blog').add({  //插入数据库是自带openID的
+                data:{
+                    ...userInfo,
+                    content:content,
+                    img:fileIds,
+                    createTime:db.serverDate() //服务端时间
+                }
+            }).then((res)=>{
+                wx.hideLoading()
+                wx.showToast({
+                  title: '发布成功',
+                })
+                wx.navigateBack({
+                  delta: 1,
+                })
+            }).catch((res)=>{
+                wx.hideLoading()
+                wx.showToast({
+                  title: '发布失败',
+                })
+            })
+        })
+    },  
     // 点击删除图片
     onDellImg(e) {
-        let { index } = e.currentTarget.dataset
+        let {
+            index
+        } = e.currentTarget.dataset
         this.data.images.splice(index, 1)
         this.setData({
-            images:this.data.images
+            images: this.data.images
         })
-        if(this.data.images.length==Max_IMG_COUNT-1){
+        if (this.data.images.length == Max_IMG_COUNT - 1) {
             this.setData({
-                selectPhoto:true
+                selectPhoto: true
             })
         }
     },
-    onPreViewImg(e){
+    onPreViewImg(e) {
         wx.previewImage({
-          urls: this.data.images,
-          current:e.currentTarget.dataset.imgSrc
+            urls: this.data.images,
+            current: e.currentTarget.dataset.imgSrc
         })
     },
     // 用户输入文字
@@ -115,6 +132,7 @@ Page({
         this.setData({
             wordsNum
         })
+        content=e.detail.value
     },
     //用户获取焦点
     onFocus(e) {
@@ -127,7 +145,8 @@ Page({
         this.setData({
             footerBottom: 0
         })
-    }
+    },
+
 
 
 })
