@@ -20,7 +20,6 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        console.log(options)
         userInfo=options
     },
     onChooseImage: function () {
@@ -56,6 +55,7 @@ Page({
         let fileIds=[]
         wx.showLoading({
           title: '发布中',
+          mask:true
         })
         for (let i = 0, len = this.data.images.length; i < len; i++) {
          let p= new Promise((resolve, reject) => {
@@ -89,9 +89,13 @@ Page({
                 wx.showToast({
                   title: '发布成功',
                 })
-                wx.navigateBack({
-                  delta: 1,
-                })
+                // 返回上一页
+                wx.navigateBack()
+                const pages = getCurrentPages()
+                // console.log(pages)
+                // 取到上一个页面
+                const prevPage = pages[pages.length - 2]
+                prevPage.onPullDownRefresh()
             }).catch((res)=>{
                 wx.hideLoading()
                 wx.showToast({
@@ -123,9 +127,7 @@ Page({
     },
     // 用户输入文字
     onInput(e) {
-        console.log(e)
         let wordsNum = e.detail.cursor
-        console.log(wordsNum)
         if (wordsNum >= Max_WORDS_NUM) { //最大字数检测
             wordsNum = `最大字数为${Max_WORDS_NUM}`
         }

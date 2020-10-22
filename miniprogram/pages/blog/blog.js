@@ -13,14 +13,26 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getBlogList() //获取博客列表信息
+    this.getBlogList(0) //获取博客列表信息
   },
-
+ 
+  onShow:function(){
+  },
+  //上拉加载
+  onReachBottom(){
+    this.getBlogList(this.data.blogList.length)
+  },
+  // 下拉刷新
+  onPullDownRefresh(){
+    this.setData({
+      blogList:[]
+    })
+    this.getBlogList(0)
+  },
   onPublish(){
     // 判断用户是否授权
     wx.getSetting({
       success:(res)=>{
-        console.log(res)
         if(res.authSetting["scope.userInfo"]){  
           wx.getUserInfo({
             success:(res)=>{
@@ -37,6 +49,7 @@ Page({
   },
   onloginSuccess(e){
    const {detail}=e
+ 
   wx.navigateTo({
     url:`../blog-edit/blog-edit?nikeName=${detail.nickName}&avatarUrl=${detail.avatarUrl}`,
   })
@@ -47,21 +60,31 @@ Page({
      content:''
    })
   },
-  getBlogList(){
+  getBlogList(start=0){ //设置start默认值
+    wx.showLoading({
+      title: '加载中',
+    })
     wx.cloud.callFunction({
       name:'blog',
       data:{
         $url:'list',
-        start:0,
+        start,
         count:10,
       }
     }).then((res)=>{
-      console.log(res)
-     this.setData({
+     this.setData({ 
        blogList:this.data.blogList.concat(res.result)
      })
+     wx.hideLoading()
     }).catch((err)=>{
       console.log(err)
+    })
+  },
+  // 跳转到详情页面
+  navtoComment(event){
+    const blogId=event.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '../blog-comment/blog-comment?blogId='+blogId,
     })
   }
 })

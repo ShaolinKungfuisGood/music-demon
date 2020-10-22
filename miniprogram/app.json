@@ -6,7 +6,8 @@
     "pages/profile/profile",
     "pages/player/player",
     "pages/demon/demon",
-    "pages/blog-edit/blog-edit"
+    "pages/blog-edit/blog-edit",
+    "pages/blog-comment/blog-comment"
   ],
   "requiredBackgroundModes": [
     "audio"

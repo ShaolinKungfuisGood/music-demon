@@ -8,10 +8,15 @@
 			<x-search placeholder="请输入关键字" iconfont="iconfont" icon-sousuo="icon-sousuo" />
 		</view>
 	</view>
+	<!-- 博客卡片 -->
+	<view class="blog-list">
+		<block wx:for="{{blogList}}" wx:key="_id">
+		<view class="blog-panel">
+			<x-blog-card blog="{{item}}" bindtap="navtoComment" data-id="{{item._id}}"></x-blog-card>
+			</view>
+		</block>
+	</view>
 	<!-- 底部弹出层 -->
-	<x-login modalshow="{{modalshow}}"
-              bind:loginSuccess="onloginSuccess"
-              bind:loginfail="onloginfail"
-    >
+	<x-login modalshow="{{modalshow}}" bind:loginSuccess="onloginSuccess" bind:loginfail="onloginfail">
 	</x-login>
 </view>
