@@ -9,7 +9,17 @@ const blogConnection = db.collection('blog')
 exports.main = async (event, context) => {
   const app = new TcbRouter({ event })
   app.router('list', async (ctx, nexr) => {
-    ctx.body = await blogConnection.skip(event.start).limit(event.count).orderBy('createTime', 'desc').get().then((res) => {
+    const keyword=event.keyword
+    let w = {}
+    if (keyword.trim() != '') {
+      w = {
+        content: new db.RegExp({
+          regexp: keyword,
+          options: 'i'
+        })
+      }
+    }
+    ctx.body = await blogConnection.where(w).skip(event.start).limit(event.count).orderBy('createTime', 'desc').get().then((res) => {
       return res.data
     })
   })

@@ -5,7 +5,7 @@
 			<i class="iconfont icon-fabu"></i>
 		</view>
 		<view class="search-container">
-			<x-search placeholder="请输入关键字" iconfont="iconfont" icon-sousuo="icon-sousuo" />
+			<x-search placeholder="请输入关键字" iconfont="iconfont" icon-sousuo="icon-sousuo" bindsearch="onSearch"/>
 		</view>
 	</view>
 	<!-- 博客卡片 -->

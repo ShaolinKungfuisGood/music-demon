@@ -1,4 +1,5 @@
 // pages/blog/blog.js
+let keyword=''
 Page({
 
   /**
@@ -70,11 +71,13 @@ Page({
         $url:'list',
         start,
         count:10,
+        keyword
       }
     }).then((res)=>{
      this.setData({ 
        blogList:this.data.blogList.concat(res.result)
      })
+    //  console.log(this.data.blogList)
      wx.hideLoading()
     }).catch((err)=>{
       console.log(err)
@@ -86,5 +89,13 @@ Page({
     wx.navigateTo({
       url: '../blog-comment/blog-comment?blogId='+blogId,
     })
+  },
+  // 用户点击查询按钮
+  onSearch:function(event){
+    keyword=event.detail.keyWord
+    this.setData({
+      blogList:[]
+    })
+    this.getBlogList(0)
   }
 })
