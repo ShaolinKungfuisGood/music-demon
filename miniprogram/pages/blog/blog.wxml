@@ -13,9 +13,11 @@
 		<block wx:for="{{blogList}}" wx:key="_id">
 		<view class="blog-panel">
 			<x-blog-card blog="{{item}}" bindtap="navtoComment" data-id="{{item._id}}"></x-blog-card>
+				<x-blog-ctrl iconfont="iconfont" icon-pinglun="icon-pinglun" icon-fenxiang="icon-iconfontzhizuobiaozhun20"/>
 			</view>
 		</block>
 	</view>
+
 	<!-- 底部弹出层 -->
 	<x-login modalshow="{{modalshow}}" bind:loginSuccess="onloginSuccess" bind:loginfail="onloginfail">
 	</x-login>

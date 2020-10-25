@@ -20,7 +20,7 @@
   }
   
   /* 可以直接对外部样式修改 */
-  .modal .icon-shanchu{
+  .modal .icon-shanchu1{
     position: absolute;
     right: 10rpx;
     top: 10rpx;
