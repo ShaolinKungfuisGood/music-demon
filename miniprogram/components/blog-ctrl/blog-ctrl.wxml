@@ -16,8 +16,8 @@
 		>
 	</x-login>
 <x-bottom-modal modalshow="{{modalShow}}">
-	<view slot="modal-content">
+	<form slot="modal-content" report-submit="true" bind:submit="onSend">
 		<textarea bindinput="onInput" name="content" class="comment-content" placeholder="写评论" value="{{content}}" fixed="true"></textarea>
-		<button class="send" form-type="submit" style="wid" bind:tap="onSend" style="width:unset">发送</button>
-	</view>
+		<button class="send" form-type="submit" style="width:unset">发送</button>
+	</form>
 </x-bottom-modal>
