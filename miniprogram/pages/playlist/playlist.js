@@ -97,5 +97,6 @@ Page({
       wx.stopPullDownRefresh()
       wx.hideLoading()
     })
-  }
+  },
+   
 })

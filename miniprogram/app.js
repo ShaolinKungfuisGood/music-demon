@@ -20,10 +20,9 @@ App({
     }
   },
   setPlayingMusicId(musicId){
-  
     this.globalData.playingMusicId=musicId
   },
   getPlayingMusicId(){
     return this.globalData.playingMusicId
-  }
+  },
 })

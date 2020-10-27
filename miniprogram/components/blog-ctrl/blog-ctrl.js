@@ -1,12 +1,12 @@
 // components/blog-ctrl/blog-ctrl.js
 let userInfo = {}
-const db =wx.cloud.database()
+const db = wx.cloud.database()
 Component({
   /**
    * 组件的属性列表
    */
   properties: {
-    blogId:String
+    blogId: String
   },
   externalClasses: ['iconfont', 'icon-pinglun', 'icon-fenxiang'],
   /**
@@ -25,7 +25,10 @@ Component({
     onComment: function () {
       // 判断用户是否授权
       wx.getSetting({
+        withSubscriptions: true,
         success: (res) => {
+          // console.log(res)
+          // console.log(res.subscriptionsSetting)
           if (res.authSetting['scope.userInfo']) { //用户未授权
             wx.getUserInfo({
               success: (res) => {
@@ -46,7 +49,8 @@ Component({
     },
     // 授权成功  显示评论框  隐藏授权框
     onloginSuccess(event) {
-      userInfo=event.detail
+
+      userInfo = event.detail
       this.setData({
         loginShow: false,
       }, () => {
@@ -62,17 +66,11 @@ Component({
         content: ''
       })
     },
-    onInput(event) {
-      //用户输入内容
-      this.setData({
-        content: event.detail.value
-      })
-    },
     // 用户点击发送评论
-    onSend() {
-      let content = this.data.content
+    onSend(event) {
+      let content = event.detail.value.content
       if (content.trim() === '') {
-        wx.showToast({
+        wx.showModal({
           title: '输入内容不能为空',
           content: ''
         })
@@ -80,26 +78,54 @@ Component({
       }
       wx.showLoading({
         title: '评价中',
-        mask:true
+        mask: true
       })
       db.collection('blog-comment').add({
-        data:{
+        data: {
           content,
-          createTime:db.serverDate(),
-          blogId:this.properties.blogId,
-          nikeName:userInfo.nickName,
-          avatarUrl:userInfo.avatarUrl
+          createTime: db.serverDate(),
+          blogId: this.properties.blogId,
+          nickName: userInfo.nickName,
+          avatarUrl: userInfo.avatarUrl
         }
-      }).then((res)=>{
+      }).then((res) => {
         wx.hideLoading()
         wx.showToast({
           title: '评论成功',
         })
+        // this.sendOrderMSG(content) //推送订阅消息
         this.setData({
-          modalShow:false,
-          content:''
+          modalShow: false,
+          content: ''
         })
       })
+    },
+    // 推送订阅消息
+    sendOrderMSG(content) {
+      wx.cloud.callFunction({
+        name: 'sendMessage',
+        data: {
+          content,
+          nickName: userInfo.nickName,
+          blogId: this.properties.blogId
+        }
+      }).then((res) => {
+        console.log(res)
+      })
+    },
+    getUserorderMsg: function () {
+      //获取订阅授权信息
+      const result = wx.requestSubscribeMessage({
+        tmplIds: ['FPWNnROLXa0_BeNyVLKx5qfoc4y-MtwxiXyZkmo8mbM'],
+        success(res) {
+          return true
+        },
+        fail(res) {
+          return false
+        }
+      })
+      return result
     }
-  }
+  },
+
 })
