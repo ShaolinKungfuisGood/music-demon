@@ -1,5 +1,6 @@
 // components/blog-ctrl/blog-ctrl.js
 let userInfo = {}
+
 const db = wx.cloud.database()
 Component({
   /**
@@ -67,7 +68,7 @@ Component({
       })
     },
     // 用户点击发送评论
-    onSend(event) {
+    onSend: async function (event) {
       let content = event.detail.value.content
       if (content.trim() === '') {
         wx.showModal({
@@ -76,6 +77,7 @@ Component({
         })
         return
       }
+     await this.getUserOrdertemplate()
       wx.showLoading({
         title: '评价中',
         mask: true
@@ -93,39 +95,28 @@ Component({
         wx.showToast({
           title: '评论成功',
         })
-        // this.sendOrderMSG(content) //推送订阅消息
+        wx.cloud.callFunction({  //调用订阅信息模板
+          name: 'sendMessage',
+          data: {
+            content,
+            nickName: userInfo.nickName,
+            blogId: this.properties.blogId
+          }
+        }).then((res) => {
+          console.log(res)
+        })
         this.setData({
           modalShow: false,
           content: ''
         })
       })
     },
-    // 推送订阅消息
-    sendOrderMSG(content) {
-      wx.cloud.callFunction({
-        name: 'sendMessage',
-        data: {
-          content,
-          nickName: userInfo.nickName,
-          blogId: this.properties.blogId
-        }
-      }).then((res) => {
-        console.log(res)
-      })
-    },
-    getUserorderMsg: function () {
-      //获取订阅授权信息
-      const result = wx.requestSubscribeMessage({
-        tmplIds: ['FPWNnROLXa0_BeNyVLKx5qfoc4y-MtwxiXyZkmo8mbM'],
-        success(res) {
-          return true
-        },
-        fail(res) {
-          return false
-        }
+    // 获取用户订阅信息模板权限
+    getUserOrdertemplate: async function () {
+      const result = await wx.requestSubscribeMessage({
+        tmplIds: ['FPWNnROLXa0_BeNyVLKx5qfoc4y-MtwxiXyZkmo8mbM']
       })
       return result
     }
-  },
-
+  }
 })
