@@ -4,10 +4,10 @@ cloud.init()
 // 云函数入口函数
 exports.main = async (event, context) => {
     const {OPENID} = cloud.getWXContext()
-    // console.log(OPENID)
-    // console.log(event.blogId)
-    // console.log(event.content)
-    // console.log(event.nickName)
+    console.log(OPENID)
+    console.log(event.blogId)
+    console.log(event.content)
+    console.log(event.nickName)
     const result = await cloud.openapi.subscribeMessage.send({
         touser: OPENID,
         page: `/pages/blog-comment/blog-comment?blogId=${event.blogId}`,

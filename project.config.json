@@ -88,6 +88,13 @@
 					"pathName": "pages/blog-edit/blog-edit",
 					"query": "nikeName=青菜白玉汤💨&avatarUrl=https://thirdwx.qlogo.cn/mmopen/vi_32/hgPeicCHWgWQlJLO4qOtfOSCRdR2ibIaJM1PHCibMvLrcho4o4MnE86sgrJN6HkOkWZuJaNCibga7pAHWP1uK4aeNA/132",
 					"scene": null
+				},
+				{
+					"id": 4,
+					"name": "pages/blog-comment/blog-comment",
+					"pathName": "pages/blog-comment/blog-comment",
+					"query": "blogId=e373396c5f91423c01cf267f3480e27c",
+					"scene": null
 				}
 			]
 		}

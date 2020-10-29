@@ -8,7 +8,8 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    blogId: String
+    blogId: String,
+    blog:Object
   },
   externalClasses: ['iconfont', 'icon-pinglun', 'icon-fenxiang'],
   /**
@@ -46,7 +47,7 @@ Component({
               loginShow: true
             })
           }
-          if (res.subscriptionsSetting['mainSwitch']) { //监测用户是否打开允许授权按钮
+          if (res.subscriptionsSetting['mainSwitch']) { //监测用户是否打开允许授权弹窗按钮
             isOrderBtn = true
           } else {
             isOrderBtn = false
@@ -61,7 +62,6 @@ Component({
     },
     // 授权成功  显示评论框  隐藏授权框
     onloginSuccess(event) {
-
       userInfo = event.detail
       this.setData({
         loginShow: false,
@@ -94,7 +94,11 @@ Component({
         })
         return
       }
-      if (isOrderBtn == true &&isOrderAccept==false) { //只有当用户打开允许授权按钮  才可以弹窗
+      wx.showLoading({
+        title: '评价中',
+        mask: true
+      })
+      if (isOrderBtn == true) { //只有当用户打开允许授权按钮  才可以弹窗
         const res = await this.getUserOrdertemplate() //授权弹窗
         if (res['FPWNnROLXa0_BeNyVLKx5qfoc4y-MtwxiXyZkmo8mbM'] == 'accept') { //点击允许
           isOrderAccept = true
@@ -102,10 +106,6 @@ Component({
           isOrderAccept = false
         }
       }
-      wx.showLoading({
-        title: '评价中',
-        mask: true
-      })
       db.collection('blog-comment').add({
         data: {
           content,
@@ -136,8 +136,8 @@ Component({
       })
     },
     // 获取用户订阅信息模板权限
-    getUserOrdertemplate: async function () {
-      const result = await wx.requestSubscribeMessage({
+    getUserOrdertemplate:function () {
+      const result =wx.requestSubscribeMessage({
         tmplIds: ['FPWNnROLXa0_BeNyVLKx5qfoc4y-MtwxiXyZkmo8mbM'],
       })
       return result

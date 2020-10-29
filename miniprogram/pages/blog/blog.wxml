@@ -13,7 +13,12 @@
 		<block wx:for="{{blogList}}" wx:key="_id">
 		<view class="blog-panel">
 			<x-blog-card blog="{{item}}" bindtap="navtoComment" data-id="{{item._id}}"></x-blog-card>
-				<x-blog-ctrl iconfont="iconfont" icon-pinglun="icon-pinglun" blogId="{{item._id}}" icon-fenxiang="icon-iconfontzhizuobiaozhun20"/>
+				<x-blog-ctrl 
+				iconfont="iconfont" 
+				icon-pinglun="icon-pinglun"
+				blog="{{item}}"
+				blogId="{{item._id}}" 
+				icon-fenxiang="icon-iconfontzhizuobiaozhun20"/>
 			</view>
 		</block>
 	</view>

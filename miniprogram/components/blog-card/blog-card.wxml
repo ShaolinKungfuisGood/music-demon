@@ -3,7 +3,7 @@
     <image class="blog-portrait" src="{{blog.avatarUrl}}"></image>
     <view class="blog-box">
       <view class="blog-nickName">{{blog.nikeName}}</view>
-      <view class="blog-time">{{createTime}}</view>
+      <view class="blog-time">{{blog.createTime}}</view>
     </view>
   </view>
   <view class="blog-content">
