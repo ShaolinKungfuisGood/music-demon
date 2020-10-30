@@ -1,5 +1,5 @@
 <view class="ctrl">
-	<view class="ctrl-item" bind:tap="onComment">
+	<view class="ctrl-item" bind:tap="getUserOrdertemplate">
 		<i class="iconfont icon-pinglun icon"></i>
 		<text class="item">评论</text>
 	</view>
@@ -16,8 +16,8 @@
 		>
 	</x-login>
 <x-bottom-modal modalshow="{{modalShow}}">
-	<form slot="modal-content" report-submit="true" >
+	<view slot="modal-content" report-submit="true" >
 		<textarea bindinput="onInput" name="content" class="comment-content" placeholder="写评论" value="{{content}}" fixed="true"></textarea>
 		<button class="send" bind:tap="onSend" style="width:unset">发送</button>
-	</form>
+	</view>
 </x-bottom-modal>

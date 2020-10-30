@@ -1,7 +1,5 @@
 // components/blog-ctrl/blog-ctrl.js
 let userInfo = {}
-let isOrderAccept = false //订阅消息状态
-let isOrderBtn = false //订阅消息按钮
 const db = wx.cloud.database()
 Component({
   /**
@@ -30,8 +28,6 @@ Component({
       wx.getSetting({
         withSubscriptions: true,
         success: (res) => {
-          console.log(res)
-          console.log(res.subscriptionsSetting)
           if (res.authSetting['scope.userInfo']) { //用户已授权
             wx.getUserInfo({
               success: (res) => {
@@ -46,16 +42,6 @@ Component({
             this.setData({
               loginShow: true
             })
-          }
-          if (res.subscriptionsSetting['mainSwitch']) { //监测用户是否打开允许授权弹窗按钮
-            isOrderBtn = true
-          } else {
-            isOrderBtn = false
-          }
-          if (res.subscriptionsSetting['FPWNnROLXa0_BeNyVLKx5qfoc4y-MtwxiXyZkmo8mbM'] === 'accept') { //监测用户是否点击总是允许授权订阅消息
-            isOrderAccept = true
-          } else {
-            isOrderAccept = false
           }
         }
       })
@@ -98,14 +84,6 @@ Component({
         title: '评价中',
         mask: true
       })
-      if (isOrderBtn == true) { //只有当用户打开允许授权按钮  才可以弹窗
-        const res = await this.getUserOrdertemplate() //授权弹窗
-        if (res['FPWNnROLXa0_BeNyVLKx5qfoc4y-MtwxiXyZkmo8mbM'] == 'accept') { //点击允许
-          isOrderAccept = true
-        } else {
-          isOrderAccept = false
-        }
-      }
       db.collection('blog-comment').add({
         data: {
           content,
@@ -119,7 +97,6 @@ Component({
         wx.showToast({
           title: '评论成功',
         })
-        if (isOrderAccept === true) { //当用户点击允许订阅  才发送消息模板
           wx.cloud.callFunction({ //调用订阅信息模板
             name: 'sendMessage',
             data: {
@@ -128,7 +105,6 @@ Component({
               blogId: this.properties.blogId
             }
           })
-        }
         this.setData({
           modalShow: false,
           content: ''
@@ -137,10 +113,20 @@ Component({
     },
     // 获取用户订阅信息模板权限
     getUserOrdertemplate:function () {
-      const result =wx.requestSubscribeMessage({
-        tmplIds: ['FPWNnROLXa0_BeNyVLKx5qfoc4y-MtwxiXyZkmo8mbM'],
+      let templateId='FPWNnROLXa0_BeNyVLKx5qfoc4y-MtwxiXyZkmo8mbM'
+     wx.requestSubscribeMessage({
+        tmplIds: [templateId],
+        success:(res)=>{
+          if(res[templateId]=='accept'){
+            this.onComment()
+          }else{
+            wx.showToast({
+              title: '允许订阅后才可以评论',
+              icon:'none'
+            })
+          }
+        }
       })
-      return result
     }
   }
 })
