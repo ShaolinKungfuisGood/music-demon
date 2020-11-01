@@ -4,8 +4,8 @@ cloud.init()
 const TcbRouter = require('tcb-router')
 const db = cloud.database()
 const blogConnection = db.collection('blog')
-const blog_comment=db.collection('blog-comment')
-const MAX_LIMIT=100
+const blog_comment = db.collection('blog-comment')
+const MAX_LIMIT = 100
 // 云函数入口函数
 exports.main = async (event, context) => {
   const app = new TcbRouter({
@@ -41,27 +41,37 @@ exports.main = async (event, context) => {
       data: []
     }
     if (total > 0) {
-      const batchTimes=Math.ceil(total/MAX_LIMIT)
-      const tasks=[]
-      for(let i=0;i<batchTimes;i++){
-        let promise=await blog_comment.skip(i*MAX_LIMIT)
-        .limit(MAX_LIMIT).where({
-          blogId
-        }).orderBy('createTime','desc').get()
+      const batchTimes = Math.ceil(total / MAX_LIMIT)
+      const tasks = []
+      for (let i = 0; i < batchTimes; i++) {
+        let promise = await blog_comment.skip(i * MAX_LIMIT)
+          .limit(MAX_LIMIT).where({
+            blogId
+          }).orderBy('createTime', 'desc').get()
         tasks.push(promise)
       }
-      if(tasks.length>0){
-        commentList= (await Promise.all(tasks)).reduce((acc,cur)=>{
-           return {
-             data:acc.data.concat(cur.data)
-           }
-         })
+      if (tasks.length > 0) {
+        commentList = (await Promise.all(tasks)).reduce((acc, cur) => {
+          return {
+            data: acc.data.concat(cur.data)
+          }
+        })
       }
     }
-    ctx.body={
+    ctx.body = {
       commentList,
       detail
     }
   })
+  const wxContent = cloud.getWXContext()
+  app.router('getListByOrder', async (ctx, next) => {
+    console.log(wxContent.OPENID)
+    ctx.body = await blogConnection.where({
+      _openid: wxContent.OPENID
+    }).skip(event.start).limit(event.count).orderBy('createTime', 'desc').get().then((res) => {
+      return res.data
+    })
+  })
+
   return app.serve()
 }

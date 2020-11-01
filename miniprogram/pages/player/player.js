@@ -117,6 +117,10 @@ Page({
             if (!this.data.isSame) { //如果当前歌曲和上一首歌曲不相同，设置音乐实例为当前歌曲
                 backgroundAudioManager.src = result.data[0].url
                 backgroundAudioManager.title = music.name
+                backgroundAudioManager.coverImgUrl=music.al.picUrl
+                backgroundAudioManager.singer=music.ar[0].name
+                backgroundAudioManager.epname=music.al.name
+                this.savePlayHistory()
             }
             this.setData({  //设置播放状态为true
                 isPlaying: true
@@ -170,6 +174,28 @@ Page({
         this.setData({  //重复点击取反
             isPlaying: !this.data.isPlaying
         })
+    },
+    // 保存播放历史
+    savePlayHistory(){
+        // 当前播放歌曲
+        const music =musiclist[nowPlayingIndex]
+        const openid=app.globalData.openid
+        const history=wx.getStorageSync(openid)
+        let bHave=false
+        console.log(music)
+        for(let i=0,len=history.length;i<len;i++){
+            if(music.id==history[i].id){
+                bHave=true
+                break;
+            }
+        }
+        if(bHave==false){
+            history.unshift(music)
+            wx.setStorage({
+              data: history,
+              key: openid,
+            })
+        }
     },
     // 控制歌词显示与隐藏
     onChangeLyricShow: function () {
