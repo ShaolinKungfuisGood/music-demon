@@ -11,7 +11,7 @@
       blog="{{item}}" 
       iconfont="iconfont" 
       icon-pinglun="icon-pinglun" 
-      icon-fenxiang="icon-fenxiang" />
+      icon-fenxiang="icon-iconfontzhizuobiaozhun20" />
     </view>
   </block>
 </view>
