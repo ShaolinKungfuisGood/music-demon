@@ -1,20 +1,22 @@
 // pages/playlist/playlist.js
 const MAX_LIMIT=15
+const db=wx.cloud.database()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    switchImgUrls: [{
-        url: 'http://p1.music.126.net/oeH9rlBAj3UNkhOmfog8Hw==/109951164169407335.jpg',
-      },
-      {
-        url: 'http://p1.music.126.net/xhWAaHI-SIYP8ZMzL9NOqg==/109951164167032995.jpg',
-      },
-      {
-        url: 'http://p1.music.126.net/Yo-FjrJTQ9clkDkuUCTtUg==/109951164169441928.jpg',
-      }
+    switchImgUrls: [
+      // {
+      //   url: 'http://p1.music.126.net/oeH9rlBAj3UNkhOmfog8Hw==/109951164169407335.jpg',
+      // },
+      // {
+      //   url: 'http://p1.music.126.net/xhWAaHI-SIYP8ZMzL9NOqg==/109951164167032995.jpg',
+      // },
+      // {
+      //   url: 'http://p1.music.126.net/Yo-FjrJTQ9clkDkuUCTtUg==/109951164169441928.jpg',
+      // }
     ],
     playlist:[]
   },
@@ -23,7 +25,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getPlayList()
+    this.getPlayList()  //获取歌单列表
+    this.getSwiperList() //获取轮播图图片信息
   },
   
   /**
@@ -98,5 +101,12 @@ Page({
       wx.hideLoading()
     })
   },
-   
+   //获取轮播图图片信息
+   getSwiperList: function(){
+    db.collection('swiper').get().then(res=>{
+      this.setData({
+        switchImgUrls:res.data
+      })
+    })
+   }
 })

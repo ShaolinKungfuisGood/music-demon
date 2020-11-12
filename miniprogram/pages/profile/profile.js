@@ -62,5 +62,20 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  onTapQrCode:function(){
+    wx.showLoading({
+      title: '加载中',
+    })
+    wx.cloud.callFunction({
+      name:'getQRcode'
+    }).then((res)=>{
+      const fileId=res.result.fileID
+      wx.previewImage({
+        urls: [fileId],
+        current: fileId
+      })
+      wx.hideLoading()
+    })
   }
 })

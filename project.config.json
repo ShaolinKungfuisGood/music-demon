@@ -1,109 +1,105 @@
 {
-	"miniprogramRoot": "miniprogram/",
-	"cloudfunctionRoot": "cloudfunctions/",
-	"setting": {
-		"urlCheck": true,
-		"es6": true,
-		"enhance": true,
-		"postcss": true,
-		"preloadBackgroundData": false,
-		"minified": true,
-		"newFeature": true,
-		"coverView": true,
-		"nodeModules": false,
-		"autoAudits": false,
-		"showShadowRootInWxmlPanel": true,
-		"scopeDataCheck": false,
-		"uglifyFileName": false,
-		"checkInvalidKey": true,
-		"checkSiteMap": false,
-		"uploadWithSourceMap": true,
-		"compileHotReLoad": false,
-		"babelSetting": {
-			"ignore": [],
-			"disablePlugins": [],
-			"outputPath": ""
-		},
-		"useIsolateContext": true,
-		"useCompilerModule": false,
-		"userConfirmedUseCompilerModuleSwitch": false,
-		"useMultiFrameRuntime": false,
-		"useApiHook": true,
-		"packNpmManually": false,
-		"packNpmRelationList": []
-	},
-	"appid": "wxce1d8a9722aa5f6a",
-	"projectname": "music-demon",
-	"libVersion": "2.12.2",
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
-	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
-	"condition": {
-		"search": {
-			"current": -1,
-			"list": []
-		},
-		"conversation": {
-			"current": -1,
-			"list": []
-		},
-		"plugin": {
-			"current": -1,
-			"list": []
-		},
-		"game": {
-			"list": []
-		},
-		"gamePlugin": {
-			"current": -1,
-			"list": []
-		},
-		"miniprogram": {
-			"current": -1,
-			"list": [
-				{
-					"id": -1,
-					"name": "dmeon",
-					"pathName": "pages/demon/demon",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 1,
-					"name": "pages/musiclist/musiclist",
-					"pathName": "pages/musiclist/musiclist",
-					"query": "playlistId=3072883579",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/blog/blog",
-					"pathName": "pages/blog/blog",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 3,
-					"name": "pages/blog-edit/blog-edit",
-					"pathName": "pages/blog-edit/blog-edit",
-					"query": "nikeName=青菜白玉汤💨&avatarUrl=https://thirdwx.qlogo.cn/mmopen/vi_32/hgPeicCHWgWQlJLO4qOtfOSCRdR2ibIaJM1PHCibMvLrcho4o4MnE86sgrJN6HkOkWZuJaNCibga7pAHWP1uK4aeNA/132",
-					"scene": null
-				},
-				{
-					"id": 4,
-					"name": "pages/blog-comment/blog-comment",
-					"pathName": "pages/blog-comment/blog-comment",
-					"query": "blogId=e373396c5f91423c01cf267f3480e27c",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/profile/profile",
-					"pathName": "pages/profile/profile",
-					"query": "",
-					"scene": null
-				}
-			]
-		}
-	}
+    "miniprogramRoot": "miniprogram/",
+    "cloudfunctionRoot": "cloudfunctions/",
+    "setting": {
+        "urlCheck": true,
+        "es6": true,
+        "enhance": true,
+        "postcss": true,
+        "preloadBackgroundData": false,
+        "minified": true,
+        "newFeature": true,
+        "coverView": true,
+        "nodeModules": false,
+        "autoAudits": false,
+        "showShadowRootInWxmlPanel": true,
+        "scopeDataCheck": false,
+        "uglifyFileName": false,
+        "checkInvalidKey": true,
+        "checkSiteMap": false,
+        "uploadWithSourceMap": true,
+        "compileHotReLoad": false,
+        "useMultiFrameRuntime": false,
+        "useApiHook": true,
+        "babelSetting": {
+            "ignore": [],
+            "disablePlugins": [],
+            "outputPath": ""
+        },
+        "useIsolateContext": true,
+        "useCompilerModule": false,
+        "userConfirmedUseCompilerModuleSwitch": false,
+        "packNpmManually": false,
+        "packNpmRelationList": [],
+        "minifyWXSS": true
+    },
+    "appid": "wxce1d8a9722aa5f6a",
+    "projectname": "music-demon",
+    "libVersion": "2.12.2",
+    "simulatorType": "wechat",
+    "simulatorPluginLibVersion": {},
+    "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
+    "condition": {
+        "search": {
+            "list": []
+        },
+        "conversation": {
+            "list": []
+        },
+        "plugin": {
+            "list": []
+        },
+        "game": {
+            "list": []
+        },
+        "gamePlugin": {
+            "list": []
+        },
+        "miniprogram": {
+            "list": [
+                {
+                    "id": -1,
+                    "name": "dmeon",
+                    "pathName": "pages/demon/demon",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": 1,
+                    "name": "pages/musiclist/musiclist",
+                    "pathName": "pages/musiclist/musiclist",
+                    "query": "playlistId=3072883579",
+                    "scene": null
+                },
+                {
+                    "id": -1,
+                    "name": "pages/blog/blog",
+                    "pathName": "pages/blog/blog",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": 3,
+                    "name": "pages/blog-edit/blog-edit",
+                    "pathName": "pages/blog-edit/blog-edit",
+                    "query": "nikeName=青菜白玉汤💨&avatarUrl=https://thirdwx.qlogo.cn/mmopen/vi_32/hgPeicCHWgWQlJLO4qOtfOSCRdR2ibIaJM1PHCibMvLrcho4o4MnE86sgrJN6HkOkWZuJaNCibga7pAHWP1uK4aeNA/132",
+                    "scene": null
+                },
+                {
+                    "id": 4,
+                    "name": "pages/blog-comment/blog-comment",
+                    "pathName": "pages/blog-comment/blog-comment",
+                    "query": "blogId=e373396c5f91423c01cf267f3480e27c",
+                    "scene": null
+                },
+                {
+                    "id": -1,
+                    "name": "pages/profile/profile",
+                    "pathName": "pages/profile/profile",
+                    "query": "",
+                    "scene": null
+                }
+            ]
+        }
+    }
 }
