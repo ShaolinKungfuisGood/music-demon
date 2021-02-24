@@ -79,7 +79,6 @@ Component({
             })
             backgroundAudioManager.onStop(() => {
                 console.log('onStop')
-            
             })
             backgroundAudioManager.onPause(() => {
                 console.log('onPause')

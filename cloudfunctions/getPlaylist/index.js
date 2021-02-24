@@ -1,23 +1,21 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
-
 cloud.init()
 const db = cloud.database()
 const playlistCollection = db.collection('playlist')
 const axios = require('axios')
-// const URL = 'https://misicapi.xiecheng.live/personalized'
-const URL = 'https://apis.imooc.com/personalized?icode=61D3E8EF96E6FD15'
+const URL = 'https://apis.imooc.com/personalized?icode=6D20B0263447634A'
 const MAX_LIMIT = 100
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  const countResult=await playlistCollection.count()
+  const countResult=await playlistCollection.count() //获取当前数据库中的playlist集合的总条数
   const {total}=countResult
-  const batchTimes=Math.ceil(total/MAX_LIMIT)
+  const batchTimes=Math.ceil(total/MAX_LIMIT) //向上取整，获取循环的次数
   const takes=[]
   for(i=0;i<batchTimes;i++){
-   let promise= playlistCollection.skip(i*MAX_LIMIT).limit(MAX_LIMIT).get()
-   takes.push(promise)
+   let promise= playlistCollection.skip(i*MAX_LIMIT).limit(MAX_LIMIT).get()   //循环获取playlist集合的数据，一次取100条，并存入promise对象当中
+   takes.push(promise) //将取出的数据放入数组中
   }
   let list={
     data:[] 
@@ -27,7 +25,7 @@ exports.main = async (event, context) => {
       return {
         data:acc.data.concat(cur.data)
       }
-    })
+    }) 
   }
   const {data} = await axios.get(URL)
   const playlist = data.result

@@ -1,3 +1,4 @@
+<!-- 轮播图 -->
 <swiper indicator-dots="true" autoplay="true" interval="2000" duration="1000">
   <block wx:for="{{switchImgUrls}}" wx:key="url">
     <swiper-item>
