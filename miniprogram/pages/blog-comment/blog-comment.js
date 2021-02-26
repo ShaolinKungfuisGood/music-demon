@@ -15,7 +15,6 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        console.log(options)
         this.getBlogDetail(options.blogId)
     },
     // 用户点击分享
@@ -39,8 +38,10 @@ Page({
                 blogId
             }
         }).then((res)=>{
-            let commentList=res.result.commentList.data
-            let blog=res.result.detail[0]
+          
+            let commentList=res.result.list[0].commentList
+            console.log(commentList)
+            let blog=res.result.list[0]
             for(let i=0,len=commentList.length;i<len;i++){ //时间格式化
                 commentList[i].createTime=formatTime(new Date(commentList[i].createTime))
             }

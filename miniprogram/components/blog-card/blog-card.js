@@ -7,7 +7,6 @@ Component({
     properties: {
         blog:Object
     },
- 
     /**
      * 组件的初始数据
      */

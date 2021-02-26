@@ -32,7 +32,6 @@ Page({
   },
   //用户点击右上角分享
   onShareAppMessage: function (e) {
-
     let blogObj=e.target.dataset.blog
     console.log(blogObj.img[0])
     return {
